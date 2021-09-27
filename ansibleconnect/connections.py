@@ -1,5 +1,6 @@
 ANSIBLE_NULL_VALUE = 'null'
 
+import getpass
 
 def get_first_from_list_or_default(dictionary: dict, key_list: list, default_val=None):
     for key in key_list:
@@ -43,7 +44,7 @@ class SSHConnectionCommand(ConnectionCommand):
         self.ssh_private_key_file = get_first_from_list_or_default(host_variables,
                                                                    self.SSH_PRIVATE_KEY_FILE_KEYS,
                                                                    None)
-        self.user = get_first_from_list_or_default(host_variables, self.SSH_USER_KEYS, 'root')
+        self.user = get_first_from_list_or_default(host_variables, self.SSH_USER_KEYS, getpass.getuser())
         self.ssh_args = get_first_from_list_or_default(host_variables, self.SSH_ARGS_KEYS,
                                                        '-C -o ControlMaster=auto'
                                                        ' -o ControlPersist=60s')
